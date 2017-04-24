@@ -1,4 +1,4 @@
-// I installed the request packages, and they access the request module
+// npm init and --save were done to the require nps packages
 // Setting initial variables and places to read info from
 var request = require("request");
 var inquirer = require("inquirer");
