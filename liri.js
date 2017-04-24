@@ -103,7 +103,7 @@ function twitter() {
 
 // This runs when the user types node liri.js spotify-this-song "..."
 function spotify() {
-	request("https://api.spotify.com/v1/search?query=" + searchParameter + "&type=track&offset=0&limit=1", function(error, response, body) {
+	request("https://api.spotify.com/v1/search?query=" + searchParameter + "&type=track&offset=0&limit=3", function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 	  		var songResults = JSON.parse(body);
 	  		
@@ -130,15 +130,17 @@ function spotify() {
 			});
 
 	  		} else if (total != 0) {
-	  			var artistName = songResults.tracks.items[0].album.artists[0].name;
-	  			var trackName = songResults.tracks.items[0].name;
-	  			var trackPreview = songResults.tracks.items[0].preview_url;
-	  			var album = songResults.tracks.items[0].album.name;
+	  			for (var i = 0; i < 3; i++) {
+	  			var artistName = songResults.tracks.items[i].album.artists[0].name;
+	  			var trackName = songResults.tracks.items[i].name;
+	  			var trackPreview = songResults.tracks.items[i].preview_url;
+	  			var album = songResults.tracks.items[i].album.name;
 
 		  		console.log("Artist: " + artistName);
 		  		console.log("Track Name: " + trackName);
 		  		console.log("Track preview: " + trackPreview);
-		  		console.log("From the Album: " + album);	
+		  		console.log("From the Album: " + album);
+		  		console.log("================================");	
 		  	
 		  		// This writes the reponse to the log.txt file
 			  	fs.appendFile("log.txt", "SPOTIFY SEARCH:" + "\n" + 
@@ -148,8 +150,11 @@ function spotify() {
 			  		"From the Album: " + album + "\n\n", function(err) {
 			  		if (err) {
 	    				return console.log(err);
-	  				} console.log("log.txt was updated!");
+	  				} 
+
 				});
+			  }
+			  console.log("log.txt was updated!");
 		  	}
 	  	}
 	});
@@ -157,7 +162,7 @@ function spotify() {
 
 // This runs when the user types node liri.js movie-this "..."
 function movie() {
-	request("http://www.omdbapi.com/?t=" + searchParameter, function(error, response, body) {
+	request("http://www.omdbapi.com/?t=" + searchParameter + "&tomatoes=true", function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 	  		var movieResults = JSON.parse(body);
 
@@ -187,11 +192,7 @@ function movie() {
 		  		var movieLanguage = movieResults.Language;
 		  		var moviePlot = movieResults.Plot;
 		  		var movieActors = movieResults.Actors;
-
-		  		// This checks to make sure there is a Rotten Tomato rating for this movie
-		  		if (movieResults.Ratings[1] !== undefined) { var movieRottenRating = movieResults.Ratings[1].Value;
-		  		} else { var movieRottenRating = "There is no Rotten Tomatoes rating for this movie";
-		  		}
+		  		var movieRottenURL = movieResults.tomatoURL;
 
 		  		console.log("Move Title: " + movieTitle);
 		  		console.log("Year Move came out: " + movieYear);
@@ -200,7 +201,7 @@ function movie() {
 		  		console.log("Language of the movie: " + movieLanguage);
 		  		console.log("Short plot: " + moviePlot);
 		  		console.log("Actors in the movie: " + movieActors);
-		  		console.log("Rotten Tomatoes rating: " + movieRottenRating);
+		  		console.log("Rotten Tomatoes URL: " + movieRottenURL);
 
 		  		// This writes the movie's info into the log.txt file
 		  		fs.appendFile("log.txt", "MOVIE INFORMATION:" + "\n" + 
@@ -211,7 +212,7 @@ function movie() {
 		  			"Language of the movie: " + movieLanguage + "\n" + 
 		  			"Short plot: " + moviePlot + "\n" + 
 		  			"Actors in the movie: " + movieActors + "\n" + 
-		  			"Rotten Tomatoes rating: " + movieRottenRating + "\n", function(err) {
+		  			"Rotten Tomatoes URL: " + movieRottenURL + "\n\n\n", function(err) {
 	  				if (err) {
 						return console.log(err);
 					}
