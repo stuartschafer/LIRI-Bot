@@ -111,19 +111,19 @@ function spotify() {
 	  		var total = songResults.tracks.total;
 
 	  		if (total === 0) {
-	  			console.log("Sorry, there were no results for your search, but please enjoy...");
-		  		console.log("Artist: Ace of Base");
-		  		console.log("Track Name: The Sign");
+  				console.log("Sorry, there were no results for your search, but please enjoy...");
+		  		console.log("Artist: Big Data");
+		  		console.log("Track Name: Dangerous (feat. Joywave)");
 		  		console.log("Track preview: https://p.scdn.co/mp3-preview/4c463359f67dd3546db7294d236dd0ae991882ff?cid=null");
-		  		console.log("From the Album: The Sign");
+		  		console.log("From the Album: 2.0");
 
 		  		// This writes the reponse to the log.txt file when there are no search results
 		  		fs.appendFile("log.txt", "SPOTIFY SEARCH:" + "\n" + 
 		  			"Sorry, there were no results for your search, but please enjoy..." + "\n" + 
-		  		 	"Artist: Ace of Base" + "\n" + 
-		  		 	"Track Name: The Sign" + "\n" + 
-		  		 	"Track preview: https://p.scdn.co/mp3-preview/4c463359f67dd3546db7294d236dd0ae991882ff?cid=null" + "\n" + 
-		  			"From the Album: The Sign"  + "\n\n", function(err) {
+		  		 	"Artist: Big Data" + "\n" + 
+		  		 	"Track Name: Dangerous (feat. Joywave)" + "\n" + 
+		  		 	"Track preview: https://p.scdn.co/mp3-preview/84b6f0428124707bfd91b137d29121061089ee10?cid=null" + "\n" + 
+		  			"From the Album: 2.0"  + "\n\n", function(err) {
 		  		if (err) {
     				return console.log(err);
   				} console.log("log.txt was updated!");
@@ -166,8 +166,8 @@ function movie() {
 
 	  		if (movieResponse === "False") {
 	  			console.log("Sorry, there were no results for your search, but...");
-	  			console.log("If you haven't watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/");
-				console.log("It's on Netflix!");
+	  			console.log("One of the best shows is Narcos: https://www.netflix.com/title/80025172");
+				console.log("It's on Netflix! And it is AWESOME!");
 
 				// This writes the reponse to the log.txt file when there are no search results
 		  		fs.appendFile("log.txt", "MOVIE INFORMATION:" + "\n" + 
