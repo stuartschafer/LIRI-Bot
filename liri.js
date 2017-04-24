@@ -23,7 +23,7 @@ inquirer.prompt([
 
   	{	type: "list",
     	message: "Select TWEETS to see my last 20 tweets, select SPOTIFY (and it will ask you for the name) to see info about a song, select MOVIE (and it will ask you for the name) to see info on that movie, select DO WHAT IT SAYS to run a command for you.",
-    	choices: ["_____NADA_____", "TWEETS", "SPOTIFY A SONG", "GET MOVIE INFO", "DO WHAT IT SAYS", "*** PLAY BLACKJACK ***"],
+    	choices: ["TWEETS", "SPOTIFY A SONG", "GET MOVIE INFO", "DO WHAT IT SAYS", "*** PLAY BLACKJACK ***"],
     	name: "choices"
   	}
 	
