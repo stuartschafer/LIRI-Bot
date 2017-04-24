@@ -7,9 +7,12 @@ var fs = require("fs");
 var twitterStuff = require("./keys.js");
 var userBet = "";
 var cardArray = [];
+completedFunction = "";
 var card = 0;
 var dealersCount = 0;
 var bankTotal = 0;
+var gameResult = "";
+var gameMoney = "";
 
 // These next 2 are for the old school way of asking for info
 var command = process.argv[2];
@@ -64,20 +67,37 @@ function twitter() {
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 	  	if (!error) {
 
+	  		// This writes the phrase "20 RECENT TWEETS" to the log.txt file
+		 	fs.appendFile("log.txt", "20 RECENT TWEETS:" + "\n", function(err) {
+	  			if (err) {
+					return console.log(err);
+				}
+			});
+
 	  		// This checks to make sure there are at least 20 tweets.
 	  		// I'll try to tweet 20 times by Thursday, but this is in case I don't.
 	  		if (tweets.length >= 20) { totalTweets = 20
-	  		} else {totalTweets = tweets.length}
+	  		} else { totalTweets = tweets.length;
+	  		}
 
 	  		// This runs a loop of the last 20 tweets and shows them in the terminal
 		  	for (var i = 0; i < totalTweets; i++) {
 			  	var userName = tweets[i].user.name;
 			  	var userTweet = tweets[i].text;
 				var userDate = tweets[i].created_at;
-			  	console.log("Tweet #" + (i + 1) + ": " + userName + " tweeted at " + userDate + ": " + userTweet);
+			  	completedFunction = ("Tweet #" + (i + 1) + ": " + userName + " tweeted at " + userDate + ": " + userTweet);
 		 		console.log("=========================================================");
+		 		console.log(completedFunction);
+		 	
+		 		// This writes the reslts to the log.txt file
+		 		fs.appendFile("log.txt", completedFunction + "\n\n", function(err) {
+	  				if (err) {
+						return console.log(err);
+					}
+				});
 		 	}
 	  	}
+	  	console.log("log.txt was updated!");
 	});
 }
 
@@ -96,6 +116,19 @@ function spotify() {
 		  		console.log("Track Name: The Sign");
 		  		console.log("Track preview: https://p.scdn.co/mp3-preview/4c463359f67dd3546db7294d236dd0ae991882ff?cid=null");
 		  		console.log("From the Album: The Sign");
+
+		  		// This writes the reponse to the log.txt file when there are no search results
+		  		fs.appendFile("log.txt", "SPOTIFY SEARCH:" + "\n" + 
+		  			"Sorry, there were no results for your search, but please enjoy..." + "\n" + 
+		  		 	"Artist: Ace of Base" + "\n" + 
+		  		 	"Track Name: The Sign" + "\n" + 
+		  		 	"Track preview: https://p.scdn.co/mp3-preview/4c463359f67dd3546db7294d236dd0ae991882ff?cid=null" + "\n" + 
+		  			"From the Album: The Sign"  + "\n\n", function(err) {
+		  		if (err) {
+    				return console.log(err);
+  				} console.log("log.txt was updated!");
+			});
+
 	  		} else if (total != 0) {
 	  			var artistName = songResults.tracks.items[0].album.artists[0].name;
 	  			var trackName = songResults.tracks.items[0].name;
@@ -105,7 +138,18 @@ function spotify() {
 		  		console.log("Artist: " + artistName);
 		  		console.log("Track Name: " + trackName);
 		  		console.log("Track preview: " + trackPreview);
-		  		console.log("From the Album: " + album);
+		  		console.log("From the Album: " + album);	
+		  	
+		  		// This writes the reponse to the log.txt file
+			  	fs.appendFile("log.txt", "SPOTIFY SEARCH:" + "\n" + 
+			  		"Artist: " + artistName + "\n" + 
+			  		"Track Name: " + trackName + "\n" + 
+			  		"Track preview: " + trackPreview + "\n" + 
+			  		"From the Album: " + album + "\n\n", function(err) {
+			  		if (err) {
+	    				return console.log(err);
+	  				} console.log("log.txt was updated!");
+				});
 		  	}
 	  	}
 	});
@@ -124,6 +168,17 @@ function movie() {
 	  			console.log("Sorry, there were no results for your search, but...");
 	  			console.log("If you haven't watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/");
 				console.log("It's on Netflix!");
+
+				// This writes the reponse to the log.txt file when there are no search results
+		  		fs.appendFile("log.txt", "MOVIE INFORMATION:" + "\n" + 
+		  			"Sorry, there were no results for your search, but..." + "\n" + 
+		  		 	"If you haven't watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/" + "\n" + 
+		  		 	"It's on Netflix!" + "\n\n", function(err) {
+		  		if (err) {
+    				return console.log(err);
+  				} console.log("log.txt was updated!");
+				});
+
 	  		} else if (movieResponse === "True") {
 		  		var movieTitle = movieResults.Title;
 		  		var movieYear = movieResults.Year;
@@ -146,6 +201,21 @@ function movie() {
 		  		console.log("Short plot: " + moviePlot);
 		  		console.log("Actors in the movie: " + movieActors);
 		  		console.log("Rotten Tomatoes rating: " + movieRottenRating);
+
+		  		// This writes the movie's info into the log.txt file
+		  		fs.appendFile("log.txt", "MOVIE INFORMATION:" + "\n" + 
+		  			"Move Title: " + movieTitle + "\n" + 
+		  			"Year Move came out: " + movieYear + "\n" + 
+		  			"IMDB Rating: " + movieRating + "\n" + 
+		  			"Country made in: " + movieCountry + "\n" + 
+		  			"Language of the movie: " + movieLanguage + "\n" + 
+		  			"Short plot: " + moviePlot + "\n" + 
+		  			"Actors in the movie: " + movieActors + "\n" + 
+		  			"Rotten Tomatoes rating: " + movieRottenRating + "\n", function(err) {
+	  				if (err) {
+						return console.log(err);
+					}
+				});
 	  		}
 	  	}
 	});	
@@ -180,7 +250,7 @@ function checkBankAccount() {
 
 	  		]).then(function(user) {
 	  			// This checks to see what the user typed, if they typed the correct phrase, money is added to their account
-		  		if (user.whatUserTyped === "S") {
+		  		if (user.whatUserTyped === "STUART IS THE MAN, STUART IS AN AWESOME CODER") {
 		  			bankTotal = bankTotal + 50;
 		  			console.log("CONGRATS, you have added $50 to your account");
 		  			console.log("You now have $" + bankTotal + " in your account.");
@@ -311,21 +381,35 @@ function compareHands() {
 	console.log("You have a total of " + cardTotal);
 	console.log("================================");
 
-	if (dealersCount > 21) { console.log("The dealer BUSTS, YOU WIN!");
-		console.log("You WON $" + userBet + "!");
+	if (dealersCount > 21) { gameResult = "The dealer BUSTS, YOU WIN!";
+		gameMoney = "You WON $" + userBet + "!";
 		bankTotal = bankTotal + userBet;
-	} else if (cardTotal > 21) { console.log("You have bust, and you LOSE!");
-		console.log("You lost $" + userBet + ".");
+	} else if (cardTotal > 21) { gameResult = "You have bust, and you LOSE!";
+		gameMoney = "You lost $" + userBet + ".";
 		bankTotal = bankTotal - userBet;
-	} else if (dealersCount === cardTotal) { console.log("It's a TIE!");
-	} else if (dealersCount > cardTotal) { console.log("The dealer has defeated you");
-		console.log("You lost $" + userBet + ".");
+	} else if (dealersCount === cardTotal) { gameResult = "It's a TIE!";
+		gameMoney = "Since you tied, no money change took place";
+	} else if (dealersCount > cardTotal) { gameResult = "The dealer has defeated you";
+		gameMoney = "You lost $" + userBet + ".";
 		bankTotal = bankTotal - userBet;
-	} else if (dealersCount < cardTotal) { console.log("You have defeated the dealer!");
-		console.log("You WON $" + userBet + "!");
+	} else if (dealersCount < cardTotal) { gameResult = "You have defeated the dealer!";
+		gameMoney = "You WON $" + userBet + "!";
 		bankTotal = bankTotal + userBet;
 	}
+
+	console.log(gameResult);
+	console.log(gameMoney);
 	console.log("You now have a total of $" + bankTotal + " in your account");
 	// This writes to the file the new amount the user has in their bank account
 	fs.writeFile("bankaccount.txt", bankTotal, function(err) {});
+
+	// This writes what happened in the game to the log.txt file
+	fs.appendFile("log.txt", "BLACKJACK RESULT:" + "\n" + 
+		gameResult + "\n" + 
+		gameMoney + "\n" + "Money in bank: $" + 
+		bankTotal + "\n\n", function(err) {
+  		if (err) {
+			return console.log(err);
+			} console.log("log.txt was updated!");
+	});
 }
