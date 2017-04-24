@@ -15,9 +15,9 @@ var gameResult = "";
 var gameMoney = "";
 
 // These next 2 are for the old school way of asking for info
-var command = process.argv[2];
-var searchParameter = process.argv[3];
-var userSelects = "";
+// var command = process.argv[2];
+// var searchParameter = process.argv[3];
+// var userSelects = "";
 
 inquirer.prompt([
 
