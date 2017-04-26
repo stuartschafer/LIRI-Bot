@@ -13,6 +13,7 @@ var dealersCount = 0;
 var bankTotal = 0;
 var gameResult = "";
 var gameMoney = "";
+var totalTweets = 0;
 
 // These next 2 are for the old school way of asking for info
 // var command = process.argv[2];
@@ -57,6 +58,7 @@ function whatToDo () {
 // This runs when the user types node liri.js my-tweets
 // It will log the last 20 tweets and when they were created
 function twitter() {
+	var totalTweets = 0;
 
 	// This gets all the keys and secrets from the keys.js file
 	// (along with the var twitterStuff = require("./keys.js"); from above)
