@@ -159,6 +159,7 @@ function spotify() {
 			  console.log("log.txt was updated!");
 		  	}
 	  	}
+		console.log("Note if this is not working, then Spotify has updated the token for this server request");
 	});
 }
 
@@ -221,6 +222,7 @@ function movie() {
 				});
 	  		}
 	  	}
+		console.log("Note if this is not working, then the OMDb API has updated the token for this server request");
 	});	
 }
 
